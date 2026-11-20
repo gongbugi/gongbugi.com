@@ -5,62 +5,303 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>gongbugi</title>
 <meta name="description" content="gongbugi가 만든 것과 쓴 것">
-<meta name="theme-color" content="#2F6FEB">
+<meta name="theme-color" content="#F3F7FF" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0B1A3F" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232F6FEB'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@500;700&family=IBM+Plex+Sans+KR:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700..800&family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
 <style>
   :root {
-    --field: #2F6FEB; /* 9-15 GitHub 프로필 때 고른 색. 흰 글자와 대비 4.57이라 흐린 글자는 쓰지 않는다 */
-    --ink: #FFFFFF;
-    --display: "Familjen Grotesk", "IBM Plex Sans KR", sans-serif;
+    color-scheme: light dark;
+    --sky-top: #F3F7FF;
+    --sky-bottom: #EAF1FF;
+    --glow-warm: #FFF1B8;
+    --glow-cool: #CFE0FF;
+    --ink: #10204A;
+    --blue: #2F6FEB;   /* 9-15 GitHub 프로필 때 고른 색. 흰 글자와 대비 4.57이라 흐린 흰 글자는 쓰지 않는다 */
+    --yellow: #FFC94A;
+    --spark-a: #FFC94A;
+    --spark-b: #2F6FEB;
+    --bj-card: #18213D;  /* banjjak 사이트의 잉크색 */
+    --display: "Bricolage Grotesque", "IBM Plex Sans KR", sans-serif;
     --text: "IBM Plex Sans KR", system-ui, sans-serif;
+    --pad: clamp(22px, 2.6vw, 32px);
   }
   @media (prefers-color-scheme: dark) {
-    :root { --field: #0E2458; --ink: #E9F0FE; }
+    :root {
+      --sky-top: #0B1A3F;
+      --sky-bottom: #12245A;
+      --glow-warm: #22346E;
+      --glow-cool: #1A2D66;
+      --ink: #F4F7FF;
+      --spark-b: #FFFFFF;
+      --bj-card: #22305C;  /* 밤하늘 바탕과 구분되게 한 칸 밝게 */
+    }
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { background: var(--field); color: var(--ink); }
-  main {
+  html { background: var(--sky-bottom); }
+  body {
     min-height: 100vh;
     min-height: 100svh;
+    color: var(--ink);
+    background:
+      radial-gradient(60rem 40rem at 0% 0%, var(--glow-warm), transparent 62%),
+      radial-gradient(52rem 36rem at 100% 0%, var(--glow-cool), transparent 66%),
+      linear-gradient(var(--sky-top), var(--sky-bottom));
+    font: 400 1.0625rem/1.6 var(--text);
+    word-break: keep-all;
+  }
+  main {
+    max-width: 72rem;
+    margin: 0 auto;
+    padding: clamp(40px, 5vw, 64px) clamp(16px, 4vw, 56px) clamp(32px, 5vw, 64px);
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    gap: 4rem;
-    padding: clamp(16px, 3vw, 44px);
-    font: 400 1.0625rem/1.65 var(--text);
+    gap: clamp(2.5rem, 5vw, 3.5rem);
   }
+
+  /* 이름과 반짝이 */
+  .sky { position: relative; align-self: flex-start; font-size: clamp(3.5rem, 18vw, 9.5rem); }
   h1 {
-    font: 700 clamp(4rem, 23vw, 25rem)/0.95 var(--display);
-    letter-spacing: -0.045em;
-    margin-left: -0.05em;
+    font: 800 1em/0.9 var(--display);
+    letter-spacing: -0.04em;
+    margin-left: -0.04em;
   }
-  ul {
-    list-style: none;
+  .s { position: absolute; fill: currentColor; animation: twinkle 3.2s ease-in-out infinite; }
+  .s1 { width: 0.46em; height: 0.46em; top: -0.34em; right: -0.42em; color: var(--spark-a); }
+  .s2 { width: 0.2em;  height: 0.2em;  top: -0.26em; left: 0.12em;  color: var(--spark-b); animation-delay: -0.8s; }
+  .s3 { width: 0.24em; height: 0.24em; top: 0.22em;  right: -0.66em; color: var(--spark-b); animation-delay: -1.6s; }
+  .s4 { width: 0.13em; height: 0.13em; bottom: 0;    right: -0.2em;  color: var(--spark-a); animation-delay: -2.4s; }
+  @keyframes twinkle {
+    0%, 100% { transform: scale(1) rotate(0deg); opacity: 1; }
+    50% { transform: scale(0.55) rotate(45deg); opacity: 0.55; }
+  }
+
+  /* 카드: 이름 · 한 줄 · 그 사이트를 줄인 미니 창 */
+  ul { list-style: none; }
+  .cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-    gap: 2.5rem clamp(1.5rem, 4vw, 4rem);
+    grid-template-columns: 1.6fr 1fr;
+    grid-template-rows: repeat(2, 17rem);
+    gap: clamp(12px, 1.6vw, 20px);
   }
-  a {
+  .card {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    height: 100%;
+    padding: var(--pad) var(--pad) 0;
+    border-radius: 28px;
     color: inherit;
-    font: 500 clamp(1.875rem, 3.4vw, 2.875rem)/1.15 var(--display);
-    text-decoration-thickness: 2px;
-    text-underline-offset: 0.16em;
+    text-decoration: none;
   }
-  a:hover { text-decoration-thickness: 4px; }
-  a:focus-visible { outline: 3px solid var(--ink); outline-offset: 6px; border-radius: 2px; }
-  li p { margin-top: 0.6rem; max-width: 24em; }
+  .card:focus-visible { outline: 3px solid var(--ink); outline-offset: 4px; }
+  .name { font: 800 clamp(2.25rem, 4vw, 3rem)/1 var(--display); letter-spacing: -0.03em; padding-right: 3.5rem; }
+  .name small { font: 500 0.4em/1 var(--text); letter-spacing: 0; margin-left: 0.4em; }
+  .desc { font-weight: 500; max-width: 24em; }
+  .icon {
+    position: absolute;
+    top: var(--pad);
+    right: var(--pad);
+    width: 2.5rem;
+    height: 2.5rem;
+    fill: currentColor;
+    transition: transform 0.6s cubic-bezier(0.3, 1.4, 0.5, 1);
+  }
+  /* 마우스를 올리면 아이콘마다 다르게: 별은 반짝 돌고, 옥토캣은 고개를 갸웃, 연필은 한 획 */
+  .banjjak .card:hover .icon, .banjjak .card:focus-visible .icon { transform: rotate(180deg) scale(1.12); }
+  .code .card:hover .icon, .code .card:focus-visible .icon { transform: rotate(-12deg) scale(1.1); }
+  .blog .card:hover .icon, .blog .card:focus-visible .icon { transform: translate(-5px, 5px) rotate(-8deg); }
+
+  /* 미니 창: 아래 끝은 카드 밖으로 잘린다 */
+  .win {
+    flex: 1 1 0;
+    min-height: 0;
+    margin-top: 0.9rem;
+    border-radius: 14px 14px 0 0;
+    overflow: hidden;
+    background: var(--w-bg);
+    color: var(--w-ink);
+    font-size: 13px;
+    line-height: 1.45;
+    transition: transform 0.35s ease;
+  }
+  .card:hover .win, .card:focus-visible .win { transform: translateY(-6px); }
+  .bar { padding: 8px 10px; background: var(--w-bar); }
+  .bar span {
+    display: block;
+    padding: 2px 12px;
+    border-radius: 999px;
+    background: var(--w-pill);
+    color: var(--w-muted);
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .page { padding: 14px 16px 18px; }
+
+  /* banjjak: 사이트와 같은 「옅은 푸른 종이에 남색 잉크, 반짝임만 금색」 */
+  .banjjak { grid-row: span 2; }
+  .banjjak .card { background: var(--bj-card); color: #EDF0F5; }
+  .banjjak .name { font-size: clamp(3rem, 6vw, 5rem); }
+  .banjjak .desc { font-size: clamp(1.0625rem, 1.5vw, 1.25rem); }
+  .banjjak .icon { color: var(--yellow); width: 3.25rem; height: 3.25rem; }
+  .banjjak .win { --w-bg: #EDF0F5; --w-ink: #18213D; --w-bar: #E2E7F0; --w-pill: #F7F8FB; --w-muted: #586179; }
+  .bj-head { display: flex; align-items: center; gap: 6px; font-size: 22px; font-weight: 600; line-height: 1.2; }
+  .bj-head svg { width: 15px; height: 15px; fill: #E2A400; }
+  .bj-lede { margin-top: 2px; color: #586179; }
+  .bj-tabs { display: flex; gap: 6px; margin-top: 12px; }
+  .bj-tabs span { padding: 3px 10px; border: 1px solid #7F8AA3; border-radius: 6px; font-weight: 600; font-size: 12px; }
+  .bj-tabs .on { background: #18213D; border-color: #18213D; color: #EDF0F5; }
+  .bj-rows { margin-top: 10px; }
+  .bj-rows li {
+    display: grid;
+    grid-template-columns: 14px 22px 1fr 44px;
+    align-items: center;
+    column-gap: 8px;
+    padding: 10px 0;
+    border-top: 1px solid #CCD2DF;
+  }
+  .bj-rows b { font: 500 12px "IBM Plex Mono", monospace; color: #586179; text-align: right; }
+  .bj-rows svg {
+    justify-self: center;
+    width: calc(20px * var(--g));
+    height: calc(20px * var(--g));
+    fill: #E2A400;
+    animation: pop 0.9s ease-out both;
+    animation-delay: var(--d);
+  }
+  @keyframes pop {
+    0% { opacity: 0; transform: scale(0.2) rotate(-30deg); }
+    60% { opacity: 1; transform: scale(1.18); }
+    100% { transform: scale(1); }
+  }
+  .bj-rows i, .bj-rows em { display: block; height: 7px; border-radius: 4px; }
+  .bj-rows i { width: var(--w); background: #18213D; box-shadow: 0 13px 0 -1px #B9C1D2; margin-bottom: 12px; }
+  .bj-rows em { background: #F6E6B4; }
+
+  /* GitHub: 파란 카드 안에 GitHub 다크 화면의 레포 목록 */
+  .code .card { background: var(--blue); color: #FFFFFF; }
+  .code .icon { color: #FFFFFF; }
+  .code .win {
+    --w-bg: #0D1117; --w-ink: #E6EDF3; --w-bar: #010409; --w-pill: #161B22; --w-muted: #9198A1;
+    font-family: -apple-system, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+  }
+  .gh-head { color: #9198A1; font-size: 12px; }
+  .gh li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 8px;
+    margin-top: 8px;
+    padding: 8px 10px;
+    border: 1px solid #3D444D;
+    border-radius: 6px;
+  }
+  .gh b { color: #4493F8; font-weight: 600; }
+  .gh .pub { padding: 0 7px; border: 1px solid #3D444D; border-radius: 999px; color: #9198A1; font-size: 11px; }
+  .gh .lang { margin-left: auto; color: #9198A1; font-size: 12px; display: inline-flex; align-items: center; gap: 5px; }
+  .gh .lang i { width: 10px; height: 10px; border-radius: 50%; background: var(--c); }
+
+  /* 블로그: 노란 카드 안에 흰 글 목록 */
+  .blog .card { background: var(--yellow); color: #10204A; }
+  .blog .icon { color: var(--blue); }
+  .blog .win { --w-bg: #FFFFFF; --w-ink: #222222; --w-bar: #F2F3F5; --w-pill: #FFFFFF; --w-muted: #777777; }
+  .nb-head { color: #03A94E; font-size: 12px; font-weight: 700; }
+  .nb li { padding: 9px 0; border-bottom: 1px solid #EEEEEE; }
+  .nb li:last-child { border-bottom: 0; }
+  .nb b { display: block; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .nb span { color: #999999; font-size: 12px; }
+
+  @media (max-width: 720px) {
+    .cards { grid-template-columns: 1fr; grid-template-rows: none; }
+    .banjjak { grid-row: auto; }
+    .card { height: 17rem; }
+    .banjjak .card { height: 26rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .s, .bj-rows svg { animation: none; }
+    .icon, .win { transition: none; }
+  }
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="spark" viewBox="0 0 24 24"><path d="M12 0C12 6.6 17.4 12 24 12C17.4 12 12 17.4 12 24C12 17.4 6.6 12 0 12C6.6 12 12 6.6 12 0Z"/></symbol>
+  <symbol id="spark-bj" viewBox="0 0 24 24"><path d="M12 0C13 8 16 11 24 12 16 13 13 16 12 24 11 16 8 13 0 12 8 11 11 8 12 0Z"/></symbol>
+  <symbol id="github" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></symbol>
+  <symbol id="pencil" viewBox="0 0 24 24"><g transform="rotate(45 12 12)"><rect x="8.5" y="0.5" width="7" height="3.6" rx="1.4"/><rect x="8.5" y="5.2" width="7" height="12"/><path d="M8.5 18.3h7l-3.5 5.4z"/></g></symbol>
+</svg>
 <main>
-  <h1>gongbugi</h1>
-  <ul>
-    <li><a href="https://banjjak.gongbugi.com">banjjak</a><p>지금 뜨는 GitHub 레포를 AI가 정리해 주는 서비스</p></li>
-    <li><a href="https://github.com/gongbugi">GitHub</a><p>만든 것들의 코드</p></li>
-    <li><a href="https://blog.naver.com/robi1492">블로그</a><p>만들면서 쓴 개발 일지</p></li>
+  <div class="sky">
+    <h1>gongbugi</h1>
+    <svg class="s s1" aria-hidden="true"><use href="#spark"/></svg>
+    <svg class="s s2" aria-hidden="true"><use href="#spark"/></svg>
+    <svg class="s s3" aria-hidden="true"><use href="#spark"/></svg>
+    <svg class="s s4" aria-hidden="true"><use href="#spark"/></svg>
+  </div>
+  <ul class="cards">
+    <li class="banjjak">
+      <a class="card" href="https://banjjak.gongbugi.com">
+        <span class="name">banjjak<small>반짝</small></span>
+        <span class="desc">지금 뜨는 GitHub 레포를 AI가 정리해 주는 서비스</span>
+        <svg class="icon" aria-hidden="true"><use href="#spark-bj"/></svg>
+        <div class="win" aria-hidden="true">
+          <div class="bar"><span>banjjak.gongbugi.com</span></div>
+          <div class="page">
+            <p class="bj-head"><svg><use href="#spark-bj"/></svg>반짝</p>
+            <p class="bj-lede">지금 별이 빨리 느는 GitHub 레포</p>
+            <div class="bj-tabs"><span class="on">새로 생긴 레포</span><span>전체 레포</span></div>
+            <ul class="bj-rows">
+              <li style="--g:1;--d:0ms;--w:58%"><b>1</b><svg><use href="#spark-bj"/></svg><span><i></i></span><em></em></li>
+              <li style="--g:.86;--d:90ms;--w:72%"><b>2</b><svg><use href="#spark-bj"/></svg><span><i></i></span><em></em></li>
+              <li style="--g:.74;--d:180ms;--w:46%"><b>3</b><svg><use href="#spark-bj"/></svg><span><i></i></span><em></em></li>
+              <li style="--g:.64;--d:270ms;--w:64%"><b>4</b><svg><use href="#spark-bj"/></svg><span><i></i></span><em></em></li>
+              <li style="--g:.56;--d:360ms;--w:52%"><b>5</b><svg><use href="#spark-bj"/></svg><span><i></i></span><em></em></li>
+              <li style="--g:.5;--d:450ms;--w:68%"><b>6</b><svg><use href="#spark-bj"/></svg><span><i></i></span><em></em></li>
+            </ul>
+          </div>
+        </div>
+      </a>
+    </li>
+    <li class="code">
+      <a class="card" href="https://github.com/gongbugi">
+        <span class="name">GitHub</span>
+        <span class="desc">프로젝트 코드 저장소</span>
+        <svg class="icon" aria-hidden="true"><use href="#github"/></svg>
+        <div class="win" aria-hidden="true">
+          <div class="bar"><span>github.com/gongbugi</span></div>
+          <div class="page">
+            <p class="gh-head">Repositories</p>
+            <ul class="gh">
+              <li><b>banjjak</b><span class="pub">Public</span><span class="lang"><i style="--c:#3572A5"></i>Python</span></li>
+              <li><b>gongbugi.com</b><span class="pub">Public</span><span class="lang"><i style="--c:#E34C26"></i>HTML</span></li>
+            </ul>
+          </div>
+        </div>
+      </a>
+    </li>
+    <li class="blog">
+      <a class="card" href="https://blog.naver.com/robi1492">
+        <span class="name">블로그</span>
+        <span class="desc">만들면서 쓴 개발 일지</span>
+        <svg class="icon" aria-hidden="true"><use href="#pencil"/></svg>
+        <div class="win" aria-hidden="true">
+          <div class="bar"><span>blog.naver.com/robi1492</span></div>
+          <div class="page">
+            <p class="nb-head">글 목록</p>
+            <ul class="nb">
+              <li><b>[banjjak] 4주차 - 지금 뜨는 흐름 / 스팸 레포 거르기</b><span>2026. 11. 13.</span></li>
+              <li><b>[banjjak] 3주차 - 운영 AI / 카드 AI / 순위 수정 / CD</b><span>2026. 11. 6.</span></li>
+            </ul>
+          </div>
+        </div>
+      </a>
+    </li>
   </ul>
 </main>
 </body>
