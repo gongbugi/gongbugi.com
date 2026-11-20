@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>gongbugi</title>
+<meta name="description" content="gongbugi가 만든 것과 쓴 것">
+<meta name="theme-color" content="#2F6FEB">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232F6FEB'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@500;700&family=IBM+Plex+Sans+KR:wght@400;500&display=swap">
+<style>
+  :root {
+    --field: #2F6FEB; /* 9-15 GitHub 프로필 때 고른 색. 흰 글자와 대비 4.57이라 흐린 글자는 쓰지 않는다 */
+    --ink: #FFFFFF;
+    --display: "Familjen Grotesk", "IBM Plex Sans KR", sans-serif;
+    --text: "IBM Plex Sans KR", system-ui, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --field: #0E2458; --ink: #E9F0FE; }
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { background: var(--field); color: var(--ink); }
+  main {
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 4rem;
+    padding: clamp(16px, 3vw, 44px);
+    font: 400 1.0625rem/1.65 var(--text);
+  }
+  h1 {
+    font: 700 clamp(4rem, 23vw, 25rem)/0.95 var(--display);
+    letter-spacing: -0.045em;
+    margin-left: -0.05em;
+  }
+  ul {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: 2.5rem clamp(1.5rem, 4vw, 4rem);
+  }
+  a {
+    color: inherit;
+    font: 500 clamp(1.875rem, 3.4vw, 2.875rem)/1.15 var(--display);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.16em;
+  }
+  a:hover { text-decoration-thickness: 4px; }
+  a:focus-visible { outline: 3px solid var(--ink); outline-offset: 6px; border-radius: 2px; }
+  li p { margin-top: 0.6rem; max-width: 24em; }
+</style>
+</head>
+<body>
+<main>
+  <h1>gongbugi</h1>
+  <ul>
+    <li><a href="https://banjjak.gongbugi.com">banjjak</a><p>지금 뜨는 GitHub 레포를 AI가 정리해 주는 서비스</p></li>
+    <li><a href="https://github.com/gongbugi">GitHub</a><p>만든 것들의 코드</p></li>
+    <li><a href="https://blog.naver.com/robi1492">블로그</a><p>만들면서 쓴 개발 일지</p></li>
+  </ul>
+</main>
+</body>
+</html>
